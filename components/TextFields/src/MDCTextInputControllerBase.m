@@ -574,7 +574,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 
   }
   self.textInput.leadingUnderlineLabel.font = font;
-
+    self.textInput.leadingUnderlineLabel.numberOfLines = 0;
   self.textInput.leadingUnderlineLabel.textColor =
       (self.isDisplayingErrorText || self.isDisplayingCharacterCountError)
           ? self.errorColor
