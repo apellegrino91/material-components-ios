@@ -366,7 +366,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
     _leadingUnderlineLabel.textColor = MDCTextInputDefaultPlaceholderTextColor();
     _leadingUnderlineLabel.font = _textInput.font;
     _leadingUnderlineLabel.textAlignment = NSTextAlignmentNatural;
-
+    _leadingUnderlineLabel.numberOfLines = 0;
+      
     [_leadingUnderlineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
 
@@ -391,6 +392,8 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                          multiplier:1
                                                            constant:0];
   _leadingUnderlineLeading.priority = UILayoutPriorityDefaultLow;
+    
+    
 
   _trailingUnderlineTrailing = [NSLayoutConstraint constraintWithItem:_trailingUnderlineLabel
                                                             attribute:NSLayoutAttributeTrailing
@@ -401,6 +404,15 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                                              constant:0];
   _trailingUnderlineTrailing.priority = UILayoutPriorityDefaultLow;
 
+    NSLayoutConstraint *widthUnderlineLeading = [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
+                                 attribute:NSLayoutAttributeWidth
+                                 relatedBy:NSLayoutRelationLessThanOrEqual
+                                    toItem:_textInput
+                                 attribute:NSLayoutAttributeWidth
+                                multiplier:1
+                                  constant:0];
+    widthUnderlineLeading.priority = UILayoutPriorityDefaultLow;
+    
   NSLayoutConstraint *labelSpacing =
       [NSLayoutConstraint constraintWithItem:_leadingUnderlineLabel
                                    attribute:NSLayoutAttributeTrailing
@@ -433,7 +445,7 @@ static inline UIColor *MDCTextInputUnderlineColor() {
                                     constant:0];
   trailingBottom.priority = UILayoutPriorityDefaultLow;
 
-  [NSLayoutConstraint activateConstraints:@[ leadingBottom, trailingBottom ]];
+  [NSLayoutConstraint activateConstraints:@[ leadingBottom, trailingBottom, widthUnderlineLeading ]];
 
   // When push comes to shove, the leading label is more likely to expand than the trailing.
   [_leadingUnderlineLabel setContentHuggingPriority:UILayoutPriorityDefaultLow - 1
